@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Surprise 2 - Happy Birthday Priyanka</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.5;
+            }
+        }
+        
+        /* Message Container */
+        .message-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: slideIn 1s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-container h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            animation: colorChange 3s infinite;
+        }
+        
+        @keyframes colorChange {
+            0%, 100% { color: #667eea; }
+            50% { color: #764ba2; }
+        }
+        
+        .message-container p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .emoji {
+            font-size: 2rem;
+            display: inline-block;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* Back Button */
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .back-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Hearts Animation */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: floatHeart 4s infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .message-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .message-container h1 {
+                font-size: 2rem;
+            }
+            
+            .message-container p {
+                font-size: 1rem;
+            }
+            
+            .back-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Message Container -->
+    <div class="message-container">
+        <h1>Happy Birthday, Priyanka <span class="emoji">🎉</span></h1>
+        <p>
+            And sorry for the late wish. I'm not sure if I'll be able to give you this surprise or not, 
+            but still Happy Birthday!
+        </p>
+        <p>
+            Stay always happy and healthy, and may all your dreams come true 
+            <span class="emoji">✨</span><span class="emoji">😊</span>
+        </p>
+        <button class="back-btn" onclick="goBack()">Back to Home</button>
+    </div>
+    
+    <script>
+        // Create Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Create Floating Hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        // Go Back Function
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+        
+        // Initialize
+        createParticles();
+        setInterval(createHeart, 800);
+    </script>
+</body>
+</html>
